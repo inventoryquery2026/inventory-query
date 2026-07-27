@@ -86,6 +86,7 @@ var filteredRecords = [];
 var selectedCar = "";
 var selectedVersion = "";
 var selectedColor = "";
+var allThreeSelected = false;
 
 document.addEventListener("DOMContentLoaded",function(){
 initCarSelect();
@@ -153,6 +154,11 @@ filterAndRender();
 }
 
 function filterAndRender(){
+if(!selectedCar || !selectedVersion || !selectedColor){
+allThreeSelected = false;
+filteredRecords = [];
+}else{
+allThreeSelected = true;
 filteredRecords = RECORDS.filter(function(r){
 // r = [车型,版型,颜色,VIN,物料名称,开票日期,经销商,省份]
 // 数据已预过滤，仅包含北京市
@@ -161,6 +167,7 @@ if(selectedVersion && r[1] !== selectedVersion) return false;
 if(selectedColor && r[2] !== selectedColor) return false;
 return true;
 });
+}
 currentPage = 1;
 renderTable();
 }
@@ -176,14 +183,18 @@ var pageData = filteredRecords.slice(start, end);
 
 document.getElementById("stats").textContent =
     "仅限北京市 | " +
-    "共 " + total.toLocaleString() + " 条记录" +
+    (allThreeSelected ? "共 " + total.toLocaleString() + " 条记录" : "请依次选择车型、版型、外观颜色") +
     (selectedCar ? " | 车型: " + selectedCar : "") +
     (selectedVersion ? " | 版型: " + selectedVersion : "") +
     (selectedColor ? " | 颜色: " + selectedColor : "");
 
 var html = '';
 if(total === 0){
+if(!allThreeSelected){
+html = '<div class="no-data"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>请依次选择车型、版型、外观颜色</div>';
+}else{
 html = '<div class="no-data"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>暂无符合条件的数据</div>';
+}
 }else{
 html = '<div class="table-wrap"><table><thead><tr><th>VIN码</th><th>物料名称</th><th>开票日期</th><th>经销商</th></tr></thead><tbody>';
 pageData.forEach(function(r){
