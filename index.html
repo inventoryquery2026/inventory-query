@@ -175,20 +175,43 @@ tbody tr:nth-child(even):hover { background: #f3f6fa; }
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     margin-top: 16px;
 }
-.sales-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-.sales-table thead th {
+.sales-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.82rem; }
+
+/* Row 1: group-header — stick at top:0 */
+.sales-table .group-header th {
     background: #1a1a2e; color: #fff; padding: 10px 8px;
-    text-align: center; font-weight: 600; border: 0.5px solid #2c3e6b;
-    white-space: nowrap; position: sticky; top: 0; z-index: 1;
+    text-align: center; font-weight: 600; font-size: 0.88rem;
+    white-space: nowrap; position: sticky; top: 0; z-index: 3;
+    border-bottom: 1px solid #2c3e6b;
 }
+/* Row 2: sub-header — stick below row 1 */
 .sales-table .sub-header th {
-    background: #2c3e6b; font-weight: 500; font-size: 0.78rem;
+    background: #2c3e6b; color: #fff; font-weight: 500; font-size: 0.78rem;
+    padding: 10px 8px; text-align: center;
+    white-space: nowrap; position: sticky; top: 39px; z-index: 2;
+    border-bottom: 1px solid #2c3e6b;
 }
-.sales-table .group-header th { font-size: 0.88rem; }
+
+/* ── Freeze first 4 columns: tbody ── */
 .sales-table tbody td {
-    padding: 8px 6px; text-align: center; border: 0.5px solid #e0e4ea;
-    color: #2c3e50;
+    padding: 8px 6px; text-align: center; border-bottom: 1px solid #e0e4ea;
+    color: #2c3e50; background: #fff;
 }
+.sales-table tbody td:nth-child(1) { position: sticky; left: 0; z-index: 1; background: #fff; }
+.sales-table tbody td:nth-child(2) { position: sticky; left: 3.5%; z-index: 1; background: #fff; }
+.sales-table tbody td:nth-child(3) { position: sticky; left: 8.5%; z-index: 1; background: #fff; }
+.sales-table tbody td:nth-child(4) { position: sticky; left: 20.5%; z-index: 1; background: #fff; }
+
+/* Freeze first 4 columns: thead (group-header cells; sub-header cols 1-4 are rowspan ghosts) */
+.sales-table .group-header th:nth-child(1) { left: 0; z-index: 5; }
+.sales-table .group-header th:nth-child(2) { left: 3.5%; z-index: 5; }
+.sales-table .group-header th:nth-child(3) { left: 8.5%; z-index: 5; }
+.sales-table .group-header th:nth-child(4) { left: 20.5%; z-index: 5; }
+
+/* Frozen cell backgrounds: even rows & hover */
+.sales-table tbody tr:nth-child(even) td:nth-child(-n+4) { background: #f5f7fa; }
+.sales-table tbody tr:hover td:nth-child(-n+4) { background: #e8eef5; }
+
 .sales-table tbody td.dealer-name { text-align: left; padding-left: 12px; }
 .sales-table tbody tr:nth-child(even) { background: #f5f7fa; }
 .sales-table tbody tr:hover { background: #e8eef5; }
