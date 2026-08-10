@@ -141,7 +141,7 @@ tbody tr:nth-child(even):hover { background: #f3f6fa; }
     thead th, tbody td { padding: 8px 10px; }
     .pagination button { padding: 6px 10px; font-size: 0.8rem; }
     .inv-table { table-layout: fixed; width: 100%; }
-    .inv-table th:nth-child(1), .inv-table td:nth-child(1) { width: 100px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .inv-table th:nth-child(1), .inv-table td:nth-child(1) { width: 100px; max-width: 100px; word-break: break-all; }
     .inv-table th:nth-child(3), .inv-table td:nth-child(3) { width: 75px; max-width: 75px; white-space: nowrap; }
     .inv-table th:nth-child(4), .inv-table td:nth-child(4) { width: 90px; max-width: 90px; white-space: nowrap; }
     .inv-table th:nth-child(2), .inv-table td:nth-child(2) { word-break: break-word; }
@@ -177,19 +177,20 @@ tbody tr:nth-child(even):hover { background: #f3f6fa; }
     margin-top: 16px;
 }
 .sales-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.82rem; }
+.sales-table thead { position: sticky; top: 0; z-index: 3; }
 
-/* Row 1: group-header — stick at top:0 */
+/* Row 1: group-header */
 .sales-table .group-header th {
     background: #1a1a2e; color: #fff; padding: 10px 8px;
     text-align: center; font-weight: 600; font-size: 0.88rem;
-    white-space: nowrap; position: sticky; top: 0; z-index: 3;
+    white-space: nowrap; position: sticky;
     border-bottom: 1px solid #2c3e6b;
 }
-/* Row 2: sub-header — stick below row 1 */
+/* Row 2: sub-header */
 .sales-table .sub-header th {
     background: #2c3e6b; color: #fff; font-weight: 500; font-size: 0.78rem;
     padding: 10px 8px; text-align: center;
-    white-space: nowrap; position: sticky; top: 39px; z-index: 2;
+    white-space: nowrap;
     border-bottom: 1px solid #2c3e6b;
 }
 
@@ -328,10 +329,13 @@ function renderSalesTable() {
     if (document.getElementById('salesBody').children.length > 0) return;
     let body = document.getElementById('salesBody');
     let html = '', total = 0;
+    let prevTotal = null, rank = 0;
     SALES_DATA.forEach((r, i) => {
-        let rankClass = i < 3 ? ' rank-top3' : '';
+        if (r.total !== prevTotal) { rank = i + 1; }
+        prevTotal = r.total;
+        let rankClass = rank <= 3 ? ' rank-top3' : '';
         html += '<tr>' +
-            '<td class="rank-col' + rankClass + '">' + r.rank + '</td>' +
+            '<td class="rank-col' + rankClass + '">' + rank + '</td>' +
             '<td>' + r.province + '</td>' +
             '<td class="dealer-name">' + r.dealer + '</td>' +
             '<td class="sum-col">' + r.total + '</td>' +
