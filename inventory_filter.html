@@ -230,7 +230,7 @@ tbody tr:nth-child(even):hover { background: #f3f6fa; }
         <h1>经销商库存查询</h1>
         <div class="subtitle">实时掌握库存动态</div>
         <div class="province-badge">当前仅展示北京市</div>
-        <div class="update-date">2026年8月9日更新</div>
+        <div class="update-date">2026年8月7日更新</div>
     </div>
 
     <div class="tab-nav">
@@ -2078,6 +2078,20 @@ const RECORDS = [
     {"material": "全新一代瑞虎9/2026款/2.0T-7DCT-两驱/豪享版-鎏金棕-5座/鎏金棕内饰/皓钻白外观/5座","model": "全新一代瑞虎9","version": "豪享版","color": "皓钻白","dealer": "北京强氏汇杰","vin": "LVTDB24B3TD167905","invoice_date": "2026-03-29"},
     {"material": "2025款瑞虎8PRO/2025/1.6T DCT国六/豪华版黑色内饰5座/石墨黑RDE","model": "瑞虎8 PRO","version": "豪华版","color": "石墨黑","dealer": "北京鑫雷晟","vin": "LVTDB21B3SDJ36057","invoice_date": "2026-05-12"}
 ];
+const PAGE_SIZE = 100;
+
+// 初始化: 填充车型下拉
+const carModelSelect = document.getElementById('carModel');
+const versionSelect = document.getElementById('version');
+const colorSelect = document.getElementById('color');
+const guide = document.getElementById('guide');
+const results = document.getElementById('results');
+const tableBody = document.getElementById('tableBody');
+const resultCount = document.getElementById('resultCount');
+const pagination = document.getElementById('pagination');
+
+let currentPage = 1;
+let currentRecords = [];
 
 // 填充车型
 const models = Object.keys(HIERARCHY);
