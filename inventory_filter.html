@@ -188,7 +188,7 @@ tbody tr:nth-child(even):hover { background: #f3f6fa; }
 }
 /* Row 2: sub-header */
 .sales-table .sub-header th {
-    background: #2c3e6b; color: #fff; font-weight: 500; font-size: 0.78rem;
+    background: #1a1a2e; color: #fff; font-weight: 500; font-size: 0.78rem;
     padding: 10px 8px; text-align: center;
     white-space: nowrap;
     border-bottom: 1px solid #2c3e6b;
@@ -230,7 +230,7 @@ tbody tr:nth-child(even):hover { background: #f3f6fa; }
         <h1>经销商库存查询</h1>
         <div class="subtitle">实时掌握库存动态</div>
         <div class="province-badge">当前仅展示北京市</div>
-        <div class="update-date">2026年8月7日更新</div>
+        <div class="update-date">2026年8月10日更新</div>
     </div>
 
     <div class="tab-nav">
@@ -342,7 +342,7 @@ function renderSalesTable() {
             '<td class="sum-col">' + r.total + '</td>' +
             '<td>' + r.rh9_全 + '</td><td>' + r.rh9_9 + '</td><td>' + r.rh9_x + '</td><td>' + r.rh9_other + '</td><td class="sum-col">' + r.rh9_total + '</td>' +
             '<td>' + r.rh8_5 + '</td><td>' + r.rh8_pro + '</td><td>' + r.rh8_plus + '</td><td>' + r.rh8_other + '</td><td class="sum-col">' + r.rh8_total + '</td>' +
-            '<td class="sum-col">' + r.ar8 + '</td>' +
+            '<td>' + r.ar8 + '</td>' +
             '<td>' + r.rh7 + '</td><td>' + r.other + '</td>' +
             '</tr>';
         total += r.total;
